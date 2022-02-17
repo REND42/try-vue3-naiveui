@@ -1,7 +1,6 @@
 <template>
   <n-layout-sider content-style="padding: 24px;">
-    <n-menu :options="menuOptions"></n-menu>
-
+    <n-menu accordion :options="menuOptions"></n-menu>
   </n-layout-sider>
 </template>
 
@@ -17,7 +16,7 @@ const menuList = router.options.routes[0].children
 
 const mapping = (items: RouteRecordRaw[]): MenuOption[] => items.map(item => ({
   key: item.name?.toString(),
-  label: item.name != null ? () => h(RouterLink, { to: item }, { default: () => item.meta?.title }) : item.meta?.title,
+  label: !item.children ? () => h(RouterLink, { to: item }, { default: () => item.meta?.title }) : item.meta?.title,
   children: item.children && mapping(item.children)
 }))
 

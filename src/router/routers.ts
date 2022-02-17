@@ -1,19 +1,13 @@
 import { RouteRecordRaw } from "vue-router";
 
-interface Meta {
-  title: string,
-  disabled: boolean,
-  auth: boolean
-}
-
 const Layout = () => import('@/layout/index.vue')
 
 const mainRoutes: RouteRecordRaw[] = [
   {
     name: 'dashboard',
-    path: '/',
-    component: Layout,
-    
+    path: '/dashboard',
+    redirect: '/dashboard/home',
+    component: () => import('@/views/dashboard/home.vue'),
     meta: {
       title: 'Dashboard',
       auth: true,
@@ -21,8 +15,8 @@ const mainRoutes: RouteRecordRaw[] = [
     children: [
       {
         name: 'home',
-        path: '/',
-        component: () => import('@/views/home.vue'),
+        path: 'home',
+        component: () => import('@/views/dashboard/home.vue'),
         meta: {
           title: 'Home',
           auth: true,
@@ -31,7 +25,7 @@ const mainRoutes: RouteRecordRaw[] = [
       {
         name: 'update',
         path: 'update',
-        component: () => import('@/views/update.vue'),
+        component: () => import('@/views/dashboard/update.vue'),
         meta: {
           title: 'update',
           auth: true,
@@ -39,14 +33,49 @@ const mainRoutes: RouteRecordRaw[] = [
       }
     ]
   },
+  {
+    name: 'Post',
+    path: '/post',
+    component: () => import('@/views/post/manage.vue'),
+    meta: {
+      title: 'Post',
+      auth: true,
+    },
+    children: [
+      {
+        name: 'manage',
+        path: 'manage',
+        component: () => import('@/views/post/manage.vue'),
+        meta: {
+          title: 'Manage',
+          auth: true,
+        }
+      },
+      {
+        name: 'create',
+        path: 'create',
+        component: () => import('@/views/post/create.vue'),
+        meta: {
+          title: 'Create',
+          auth: true,
+        }
+      }
+    ]
+  }
 ]
 
 const routes: RouteRecordRaw[] = [
+  // ...mainRoutes,
   {
-    name: 'layout',
+    name: 'sys',
     path: '/',
-    component: () => import('@/layout/index.vue'),
-    children: [...mainRoutes]
+    redirect: '/dashboard/home',
+    component: Layout,
+    meta: {
+      title: 'index',
+      auth: true,
+    },
+    children:[...mainRoutes]
   },
   {
     name: 'login',

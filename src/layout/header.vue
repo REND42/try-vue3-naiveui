@@ -1,24 +1,77 @@
 <template>
   <n-layout-header bordered>
-    <n-button text style="font-size: 20px">
-      <n-icon>
-        <refresh-outline />
-      </n-icon>
-    </n-button>
-    <n-breadcrumb>
-      <n-breadcrumb-item>Dashboard</n-breadcrumb-item>
-      <n-breadcrumb-item>Home</n-breadcrumb-item>
-    </n-breadcrumb>
+    <div class="breadcrum">
+      <n-button text style="font-size: 20px">
+        <n-icon>
+          <refresh-outline />
+        </n-icon>
+      </n-button>
+      <n-breadcrumb>
+        <n-breadcrumb-item v-for="item in currentRoute.matched" :key="item.path" @click="handleBreadClick(item.path)">
+          {{ item.meta.title }}
+        </n-breadcrumb-item>
+      </n-breadcrumb>
+    </div>
+
+    <div class="opt-btn">
+      <n-space>
+        <n-switch v-model:value="active" size="medium" @update:value="handleSwitch">
+          <template #checked-icon>
+            <n-icon :component="ArrowForwardOutline" />
+          </template>
+          <template #unchecked-icon>
+            <n-icon :component="ArrowBackOutline" />
+          </template>
+        </n-switch>
+      </n-space>
+    </div>
+
   </n-layout-header>
 </template>
 
 <script lang="ts" setup>
-import { RefreshOutline } from '@vicons/ionicons5'
+import { RefreshOutline, ArrowBackOutline, ArrowForwardOutline } from '@vicons/ionicons5'
+import { darkTheme } from 'naive-ui';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAppStore } from '../store/app';
+
+const router = useRouter()
+const { currentRoute } = router
+const appStore = useAppStore()
+
+const active = ref(false)
+
+const handleBreadClick = (path: string) => {
+  if(path === currentRoute.value.path) return
+  router.push(path)
+}
+
+const handleSwitch = (value: boolean) => {
+  console.log('handle ', value)
+  if(value) {
+    appStore.setTheme(null)
+  } else {
+    appStore.setTheme(darkTheme)
+  }
+}
 
 </script>
 
 <style lang="scss" scoped>
-  .n-breadcrumb {
-    padding-left: 16px;
+.n-layout-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .breadcrum {
+    display: flex;
+
+    .n-breadcrumb {
+      padding-left: 16px;
+    }
   }
+}
+
 </style>

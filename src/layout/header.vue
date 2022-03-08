@@ -60,10 +60,15 @@ const handleSwitch = (value: boolean) => {
 
 <style lang="scss" scoped>
 .n-layout-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    height: 64px;
+    box-shadow: 0 1px 4px #00152914;
+    transition: all .2s ease-in-out;
+    width: 100%;
+    z-index: 11;
 
   .breadcrum {
     display: flex;

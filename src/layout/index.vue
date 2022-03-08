@@ -3,7 +3,8 @@
 		<Sidebar />
 		<n-layout>
 			<Header />
-			<n-layout-content content-style="padding: 24px; min-height: 85vh">
+			<n-layout-content position="absolute" content-style="padding: 24px; height: 100%;"
+				style="top: 64px;">
 				<router-view/>
 			</n-layout-content>
 		</n-layout>

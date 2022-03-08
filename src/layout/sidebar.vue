@@ -1,6 +1,5 @@
 <template>
-
-  <n-layout-sider content-style="padding: 8px;">
+  <n-layout-sider content-style="padding: 0px;" :width="200" :collapsed-width="0" :native-scrollbar="false">
     <div class="logo">
     <n-icon size="36" color="#316c72">
       <leaf/>
@@ -85,6 +84,11 @@ function handleMenuSelect(key: string, item: MenuOption) {
 </script>
 
 <style lang="scss" scoped>
+
+.n-layout-side {
+  max-width: 200px;
+  width: 200px;
+}
 .logo {
   height: 64px;
   display: flex;
